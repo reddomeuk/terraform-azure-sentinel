@@ -1,11 +1,8 @@
 # Azure Sentinel Terraform Module
 
-<!-- Add logo when available -->
-<!-- ![RedDome Logo](./assets/reddome-logo.png) -->
-
 ## Overview
 
-This Terraform module deploys Microsoft Sentinel (formerly Azure Sentinel) and its dependencies. It's maintained by [RedDome](https://reddome.org) for educational purposes and professional implementations.
+This Terraform module deploys Microsoft Sentinel (formerly Azure Sentinel) and its dependencies in Azure UK South region.
 
 ## Prerequisites
 
@@ -13,7 +10,6 @@ This Terraform module deploys Microsoft Sentinel (formerly Azure Sentinel) and i
 - Azure Subscription
 - Terraform Cloud account
 - GitHub account
-- Cloudflare account (for DNS management)
 
 ## Quick Start
 
@@ -44,37 +40,35 @@ This Terraform module deploys Microsoft Sentinel (formerly Azure Sentinel) and i
      ARM_TENANT_ID
      ```
 
-5. Configure Cloudflare (Optional):
-   - Add your Cloudflare API token as an environment variable:
-     ```
-     CLOUDFLARE_API_TOKEN
-     ```
+## Required Variables
+
+| Name | Description | Type | Default |
+|------|-------------|------|---------|
+| location | Azure region | string | `"uksouth"` |
+| resource_group_name | Name of the resource group | string | - |
+| workspace_name | Name of the Log Analytics workspace | string | - |
+
+## Environment Variables
+
+```hcl
+ARM_CLIENT_ID       = "your-client-id"
+ARM_CLIENT_SECRET   = "your-client-secret"
+ARM_SUBSCRIPTION_ID = "your-subscription-id"
+ARM_TENANT_ID       = "your-tenant-id"
+```
 
 ## Usage
 
 ```hcl
 module "sentinel" {
-  source  = "github.com/reddomeuk/terraform-azure-sentinel"
+  source  = "reddome/sentinel/azure"
+  version = "1.0.0"
   
   resource_group_name = "rg-sentinel-prod"
   workspace_name     = "law-sentinel-prod"
-  location           = "eastus"
-  
-  tags = {
-    environment = "production"
-    managed_by  = "terraform"
-  }
+  location           = "uksouth"  # Default UK South region
 }
 ```
-
-## Variables
-
-| Name | Description | Type | Default |
-|------|-------------|------|---------|
-| resource_group_name | Name of the resource group | string | - |
-| workspace_name | Name of the Log Analytics workspace | string | - |
-| location | Azure region | string | "eastus" |
-| tags | Resource tags | map(string) | {} |
 
 ## Contributing
 

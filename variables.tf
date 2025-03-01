@@ -1,39 +1,5 @@
 #Module      : LABEL
 #Description : Terraform label module variables.
-variable "name" {
-  type        = string
-  default     = ""
-  description = "Name  (e.g. `app` or `cluster`)."
-}
-variable "environment" {
-  description = "Environment name (dev, test, prod)"
-  type        = string
-  default     = "dev"
-}
-
-variable "repository" {
-  type        = string
-  default     = ""
-  description = "Terraform current module repo"
-}
-
-variable "label_order" {
-  type        = list(any)
-  default     = ["name", "environment"]
-  description = "Label order, e.g. sequence of application name and environment `name`,`environment`,'attribute' [`webserver`,`qa`,`devops`,`public`,] ."
-}
-
-variable "managedby" {
-  type        = string
-  default     = ""
-  description = "ManagedBy, eg ''."
-}
-
-variable "enabled" {
-  type    = bool
-  default = true
-}
-
 variable "sentinel_enabled" {
   type    = bool
   default = true
@@ -148,9 +114,9 @@ variable "tenant_id" {
 }
 
 variable "location" {
-  description = "Azure region where resources will be created"
   type        = string
-  default     = "eastus"
+  default     = "uksouth"
+  description = "The location/region where resources will be created. Default is UK South."
 }
 
 variable "tags" {
