@@ -95,6 +95,12 @@ variable "dtc_threat-intelligence_enabled" {
   description = "Set to false to prevent the module from creating any resources."
 }
 
+variable "dtc_threat_intelligence_enabled" {
+  type        = bool
+  default     = false
+  description = "Set to false to prevent the module from creating any resources."
+}
+
 variable "discovery_logs_enabled" {
   type        = bool
   default     = true

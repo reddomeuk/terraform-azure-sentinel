@@ -137,7 +137,7 @@ resource "azurerm_sentinel_data_connector_microsoft_threat_protection" "main" {
 }
 
 resource "azurerm_sentinel_data_connector_threat_intelligence" "main" {
-  count                      = var.enabled && var.dtc_threat_intelligence_enabled ? 1 : 0
+  count                      = var.enabled && var.dtc_threat-intelligence_enabled ? 1 : 0
   name                       = format("%s-data-connector-threat-intelligence", module.labels.id)
   log_analytics_workspace_id = azurerm_sentinel_log_analytics_workspace_onboarding.main[0].workspace_id
 }
