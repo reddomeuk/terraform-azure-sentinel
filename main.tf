@@ -49,6 +49,10 @@ resource "azurerm_log_analytics_solution" "sentinel" {
   }
 
   tags = var.tags
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 ##-----------------------------------------------------------------------------
