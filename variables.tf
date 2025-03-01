@@ -153,18 +153,6 @@ variable "location" {
   default     = "uksouth"
 }
 
-variable "existing_resource_group_name" {
-  description = "Name of existing resource group"
-  type        = string
-  default     = "reddome-dev-rg"
-}
-
-variable "existing_workspace_name" {
-  description = "Name of existing Log Analytics workspace"
-  type        = string
-  default     = "reddome-dev-law"
-}
-
 variable "tags" {
   description = "A map of tags to add to all resources"
   type        = map(string)
@@ -172,4 +160,26 @@ variable "tags" {
     ManagedBy = "Terraform"
     Environment = "dev"
   }
+}
+
+variable "resource_group_name" {
+  type        = string
+  description = "Name of the resource group to create"
+}
+
+variable "workspace_name" {
+  type        = string
+  description = "Name of the Log Analytics workspace to create"
+}
+
+variable "workspace_sku" {
+  type        = string
+  description = "Sku of the Log Analytics workspace"
+  default     = "PerGB2018"
+}
+
+variable "retention_in_days" {
+  type        = number
+  description = "The workspace data retention in days"
+  default     = 30
 }

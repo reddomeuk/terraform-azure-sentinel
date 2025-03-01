@@ -25,23 +25,28 @@ provider "azurerm" {
   skip_provider_registration = true
 }
 
-# Use data sources to reference existing resources
-data "azurerm_resource_group" "existing" {
-  name = var.existing_resource_group_name
+resource "azurerm_resource_group" "rg" {
+  name     = var.resource_group_name
+  location = var.location
+  tags     = var.tags
 }
 
-data "azurerm_log_analytics_workspace" "existing" {
-  name                = var.existing_workspace_name
-  resource_group_name = data.azurerm_resource_group.existing.name
+resource "azurerm_log_analytics_workspace" "law" {
+  name                = var.workspace_name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                 = var.workspace_sku
+  retention_in_days   = var.retention_in_days
+  tags                = var.tags
 }
 
 # Enable Microsoft Sentinel
 resource "azurerm_log_analytics_solution" "sentinel" {
   solution_name         = "SecurityInsights"
-  location             = data.azurerm_resource_group.existing.location
-  resource_group_name  = data.azurerm_resource_group.existing.name
-  workspace_resource_id = data.azurerm_log_analytics_workspace.existing.id
-  workspace_name       = data.azurerm_log_analytics_workspace.existing.name
+  location              = azurerm_resource_group.rg.location
+  resource_group_name   = azurerm_resource_group.rg.name
+  workspace_resource_id = azurerm_log_analytics_workspace.law.id
+  workspace_name        = azurerm_log_analytics_workspace.law.name
 
   plan {
     publisher = "Microsoft"
@@ -49,17 +54,13 @@ resource "azurerm_log_analytics_solution" "sentinel" {
   }
 
   tags = var.tags
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 ##-----------------------------------------------------------------------------
-## Labels module callled that will be used for naming and tags.
+## Labels module called that will be used for naming and tags.
 ##-----------------------------------------------------------------------------
 module "labels" {
-  source      = "clouddrove/labels/azure"
+  source      = "reddome/labels/azure"  # Changed from clouddrove to reddome
   version     = "1.0.0"
   name        = var.name
   environment = var.environment
@@ -69,8 +70,8 @@ module "labels" {
 }
 
 resource "azurerm_sentinel_log_analytics_workspace_onboarding" "main" {
-  count        = var.enabled && var.sentinel_enabled ? 1 : 0
-  workspace_id = data.azurerm_log_analytics_workspace.existing.id
+  count        = var.enabled ? 1 : 0
+  workspace_id = azurerm_log_analytics_workspace.law.id
 }
 
 resource "azurerm_sentinel_alert_rule_ms_security_incident" "main" {
@@ -135,7 +136,7 @@ resource "azurerm_sentinel_data_connector_microsoft_threat_protection" "main" {
 }
 
 resource "azurerm_sentinel_data_connector_threat_intelligence" "main" {
-  count                      = var.enabled && var.dtc_threat-intelligence_enabled ? 1 : 0
+  count                      = var.enabled && var.dtc_threat_intelligence_enabled ? 1 : 0
   name                       = format("%s-data-connector-threat-intelligence", module.labels.id)
   log_analytics_workspace_id = azurerm_sentinel_log_analytics_workspace_onboarding.main[0].workspace_id
 }

@@ -169,3 +169,16 @@ At [CloudDrove][website], has extensive experience in designing, building & migr
   [twitter]: https://twitter.com/clouddrove/
   [email]: https://clouddrove.com/contact-us.html
   [terraform_modules]: https://github.com/clouddrove?utf8=%E2%9C%93&q=terraform-&type=&language=
+
+# Terraform Azure Sentinel Module
+
+This module provisions Microsoft Sentinel (formerly Azure Sentinel) with various data connectors.
+
+## Usage
+```hcl
+module "sentinel" {
+  source  = "reddome/sentinel/azure"
+  version = "1.0.0"
+  
+  // ... other configuration ...
+}
