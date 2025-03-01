@@ -148,18 +148,15 @@ variable "tenant_id" {
 }
 
 variable "location" {
-  description = "The Azure region to deploy resources in"
+  description = "Azure region where resources will be created"
   type        = string
-  default     = "uksouth"
+  default     = "eastus"
 }
 
 variable "tags" {
-  description = "A map of tags to add to all resources"
+  description = "Tags to apply to all resources"
   type        = map(string)
-  default = {
-    ManagedBy = "Terraform"
-    Environment = "dev"
-  }
+  default     = {}
 }
 
 variable "resource_group_name" {
@@ -174,12 +171,12 @@ variable "workspace_name" {
 
 variable "workspace_sku" {
   type        = string
-  description = "Sku of the Log Analytics workspace"
+  description = "SKU of the Log Analytics workspace"
   default     = "PerGB2018"
 }
 
 variable "retention_in_days" {
   type        = number
-  description = "The workspace data retention in days"
+  description = "Data retention period in days"
   default     = 30
 }
