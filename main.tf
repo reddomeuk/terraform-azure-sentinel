@@ -60,7 +60,9 @@ resource "azurerm_log_analytics_solution" "sentinel" {
 ## Labels module called that will be used for naming and tags.
 ##-----------------------------------------------------------------------------
 module "labels" {
-  source      = "git::https://github.com/reddomeuk/terraform-azure-labels.git"
+  source = "app.terraform.io/reddome_academy/labels/azure"  # Updated module source
+  version = "1.0.0"
+
   name        = var.name
   environment = var.environment
   managedby   = var.managedby
