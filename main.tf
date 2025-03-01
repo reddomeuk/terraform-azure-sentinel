@@ -11,7 +11,7 @@ terraform {
   cloud {
     organization = "reddome_academy"
     workspaces {
-      name = "azure-sentinel-terraform"  # You might want to choose a different workspace name
+      name = "terraform-azure-sentinel"
     }
   }
 }
