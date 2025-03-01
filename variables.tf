@@ -30,15 +30,13 @@ variable "managedby" {
 }
 
 variable "enabled" {
-  type        = bool
-  default     = true
-  description = "Set to false to prevent the module from creating any resources."
+  type    = bool
+  default = true
 }
 
 variable "sentinel_enabled" {
-  type        = bool
-  default     = true
-  description = "Flag to control the module creation."
+  type    = bool
+  default = true
 }
 
 variable "log_analytics_workspace_id" {

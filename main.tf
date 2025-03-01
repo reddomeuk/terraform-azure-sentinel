@@ -66,7 +66,7 @@ module "labels" {
 
 resource "azurerm_sentinel_log_analytics_workspace_onboarding" "main" {
   count        = var.enabled && var.sentinel_enabled ? 1 : 0
-  workspace_id = var.log_analytics_workspace_id
+  workspace_id = data.azurerm_log_analytics_workspace.existing.workspace_id
 }
 
 resource "azurerm_sentinel_alert_rule_ms_security_incident" "main" {
