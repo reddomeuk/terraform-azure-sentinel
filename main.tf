@@ -60,7 +60,7 @@ resource "azurerm_log_analytics_solution" "sentinel" {
 ## Labels module called that will be used for naming and tags.
 ##-----------------------------------------------------------------------------
 module "labels" {
-  source = "app.terraform.io/reddome_academy/labels/azure"  # Updated module source
+  source  = "clouddrove/labels/azure"  # Changed to public registry module
   version = "1.0.0"
 
   name        = var.name
